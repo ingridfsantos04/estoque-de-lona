@@ -1,0 +1,1472 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "bc4632ec-7656-487e-a513-9e3619c36ee5",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1072,
+        32
+      ],
+      "id": "ca6a15b2-5ced-439c-8a8c-68d78648a1f2",
+      "name": "Webhook",
+      "webhookId": "bc4632ec-7656-487e-a513-9e3619c36ee5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8ee17831-8e42-400c-8b12-ee08e5c4040f",
+              "name": "funcionario",
+              "value": "={{ $json.body.funcionario }}",
+              "type": "string"
+            },
+            {
+              "id": "b750dd54-e062-4ec8-967f-ebcb68bd35c4",
+              "name": "lona",
+              "value": "={{ $json.body.lona }}",
+              "type": "string"
+            },
+            {
+              "id": "60119a83-eb59-4534-9dec-de33163b0ebe",
+              "name": "operação",
+              "value": "={{ $json.body.operacao }}",
+              "type": "string"
+            },
+            {
+              "id": "9d374709-36f1-4b69-a1d2-4ac9dbdcb8ce",
+              "name": "quantidade",
+              "value": "={{ $json.body.quantidade }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -848,
+        32
+      ],
+      "id": "1ec23758-3375-4a98-b7a3-3492cf23d3c1",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1i49w8z-AvXNrO-hxpc_eIZSzrAF4dUzdC5v02JB7jRI",
+          "mode": "list",
+          "cachedResultName": "Sistema de estoque",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1i49w8z-AvXNrO-hxpc_eIZSzrAF4dUzdC5v02JB7jRI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Estoque",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1i49w8z-AvXNrO-hxpc_eIZSzrAF4dUzdC5v02JB7jRI/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "lona",
+              "lookupValue": "={{ $json.lona }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        160,
+        -1088
+      ],
+      "id": "bc8d2463-66e2-4ccc-aa47-d63d4e6cb0cb",
+      "name": "Get row(s) in sheet",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RLFtKEdHGKQ1tSRA",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1i49w8z-AvXNrO-hxpc_eIZSzrAF4dUzdC5v02JB7jRI",
+          "mode": "list",
+          "cachedResultName": "Sistema de estoque",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1i49w8z-AvXNrO-hxpc_eIZSzrAF4dUzdC5v02JB7jRI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Estoque",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1i49w8z-AvXNrO-hxpc_eIZSzrAF4dUzdC5v02JB7jRI/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "lona": "={{ $('Edit Fields').first().json.lona }}",
+            "quantidade": "={{ $json.quantidade - $('Edit Fields').first().json.quantidade }}"
+          },
+          "matchingColumns": [
+            "lona"
+          ],
+          "schema": [
+            {
+              "id": "lona",
+              "displayName": "lona",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "quantidade",
+              "displayName": "quantidade",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1024,
+        -1808
+      ],
+      "id": "b5a321f1-c8b0-4a98-bda9-0a736d7af038",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RLFtKEdHGKQ1tSRA",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1i49w8z-AvXNrO-hxpc_eIZSzrAF4dUzdC5v02JB7jRI",
+          "mode": "list",
+          "cachedResultName": "Sistema de estoque",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1i49w8z-AvXNrO-hxpc_eIZSzrAF4dUzdC5v02JB7jRI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1668476522,
+          "mode": "list",
+          "cachedResultName": "Historico",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1i49w8z-AvXNrO-hxpc_eIZSzrAF4dUzdC5v02JB7jRI/edit#gid=1668476522"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Funcionário": "={{ $('Edit Fields').first().json.funcionario }}",
+            "Lona": "={{ $('Edit Fields').first().json.lona }}",
+            "Operação": "={{ $('Edit Fields').first().json[\"operação\"] }}",
+            "Quantidade": "={{ $('Edit Fields').first().json.quantidade }}",
+            "Data": "={{ $now.toFormat('dd/MM/yyyy') }}",
+            "Horario": "={{ $now.toFormat('HH:mm') }}",
+            "Estoque após": "={{ $('Update row in sheet').first().json.quantidade }}",
+            "Movimentação": "={{ 'MOV-' + $now.toFormat('yyyyMMdd-HHmmss') + '-' + Math.floor(Math.random() * 1000) }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Data",
+              "displayName": "Data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Horario",
+              "displayName": "Horario",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Funcionário",
+              "displayName": "Funcionário",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Lona",
+              "displayName": "Lona",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Operação",
+              "displayName": "Operação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Quantidade",
+              "displayName": "Quantidade",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Estoque após",
+              "displayName": "Estoque após",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Movimentação",
+              "displayName": "Movimentação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1280,
+        -1808
+      ],
+      "id": "095105cf-0510-4890-8800-b41945449861",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RLFtKEdHGKQ1tSRA",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json['operação'] }}",
+                    "rightValue": "=SAIDA",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "612a064b-7905-452c-be13-e336196087cb"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "215cbeaf-65d8-43f3-9af9-de687080809c",
+                    "leftValue": "={{ $json['operação'] }}",
+                    "rightValue": "ENTRADA",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -144,
+        -144
+      ],
+      "id": "eb0607af-72cf-42b7-be31-488190d87463",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1i49w8z-AvXNrO-hxpc_eIZSzrAF4dUzdC5v02JB7jRI",
+          "mode": "list",
+          "cachedResultName": "Sistema de estoque",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1i49w8z-AvXNrO-hxpc_eIZSzrAF4dUzdC5v02JB7jRI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Estoque",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1i49w8z-AvXNrO-hxpc_eIZSzrAF4dUzdC5v02JB7jRI/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "lona": "={{ $json.lona }}",
+            "quantidade": "={{ $json.quantidade + $('Edit Fields').first().json.quantidade }}"
+          },
+          "matchingColumns": [
+            "lona"
+          ],
+          "schema": [
+            {
+              "id": "lona",
+              "displayName": "lona",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "quantidade",
+              "displayName": "quantidade",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        656,
+        -448
+      ],
+      "id": "7dc448a4-5864-4677-afaa-3a4e9982109a",
+      "name": "Update row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RLFtKEdHGKQ1tSRA",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1i49w8z-AvXNrO-hxpc_eIZSzrAF4dUzdC5v02JB7jRI",
+          "mode": "list",
+          "cachedResultName": "Sistema de estoque",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1i49w8z-AvXNrO-hxpc_eIZSzrAF4dUzdC5v02JB7jRI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Estoque",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1i49w8z-AvXNrO-hxpc_eIZSzrAF4dUzdC5v02JB7jRI/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "lona",
+              "lookupValue": "={{ $('Edit Fields').item.json.lona }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        112,
+        -240
+      ],
+      "id": "58349fbf-4b67-4636-bbf9-df6bd5db3ca0",
+      "name": "Get row(s) in sheet1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RLFtKEdHGKQ1tSRA",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1i49w8z-AvXNrO-hxpc_eIZSzrAF4dUzdC5v02JB7jRI",
+          "mode": "list",
+          "cachedResultName": "Sistema de estoque",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1i49w8z-AvXNrO-hxpc_eIZSzrAF4dUzdC5v02JB7jRI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1668476522,
+          "mode": "list",
+          "cachedResultName": "Historico",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1i49w8z-AvXNrO-hxpc_eIZSzrAF4dUzdC5v02JB7jRI/edit#gid=1668476522"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Estoque após": "={{ $('Update row in sheet1').first().json.quantidade }}",
+            "Data": "={{ $now.toFormat('dd/MM/yyyy') }}",
+            "Horario": "={{ $now.toFormat('HH:mm') }}",
+            "Funcionário": "={{ $('Edit Fields').first().json.funcionario }}",
+            "Lona": "={{ $('Edit Fields').first().json.lona }}",
+            "Operação": "={{ $('Edit Fields').first().json[\"operação\"] }}",
+            "Quantidade": "={{ $('Edit Fields').first().json.quantidade }}",
+            "Movimentação": "={{ 'MOV-' + $now.toFormat('yyyyMMdd-HHmmss') + '-' + Math.floor(Math.random() * 1000) }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Data",
+              "displayName": "Data",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Horario",
+              "displayName": "Horario",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Funcionário",
+              "displayName": "Funcionário",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Lona",
+              "displayName": "Lona",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Operação",
+              "displayName": "Operação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Quantidade",
+              "displayName": "Quantidade",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Estoque após",
+              "displayName": "Estoque após",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Movimentação",
+              "displayName": "Movimentação",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        880,
+        -448
+      ],
+      "id": "ba63d984-7014-4f82-98d1-4a0aef2e5e4d",
+      "name": "Append row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "RLFtKEdHGKQ1tSRA",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a4540001-c248-4ca5-a0cc-6a4981d12570",
+              "name": "status",
+              "value": "erro",
+              "type": "string"
+            },
+            {
+              "id": "a5135cb6-5362-4586-a3b0-1a0ee47527a3",
+              "name": "mensagem",
+              "value": "={{ 'Estoque insuficiente. Há apenas ' + $json.quantidade + ' unidades de ' + $('Edit Fields').first().json.lona + ' disponíveis.' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1040,
+        -1360
+      ],
+      "id": "15ff0fff-c31f-4325-8bdd-8404239401eb",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n  \"status\": \"erro\",\n  \"mensagem\": \"Estoque insuficiente. Há apenas 13 unidades de 5x5 disponíveis.\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1264,
+        -1360
+      ],
+      "id": "39585079-2194-4289-b1ad-c769d77f359c",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "938273be-90b8-40e6-84f4-5a2bfb6684b6",
+              "name": "status",
+              "value": "sucesso",
+              "type": "string"
+            },
+            {
+              "id": "673dd733-6f7f-4b08-a6a4-43b760b4feca",
+              "name": "mensagem",
+              "value": "Saída realizada com sucesso.",
+              "type": "string"
+            },
+            {
+              "id": "a29e5f97-44dd-4c26-89ae-a799cb784d71",
+              "name": "lona",
+              "value": "={{ $('Edit Fields').first().json.lona }}",
+              "type": "string"
+            },
+            {
+              "id": "745d4679-3336-4ba5-b520-2595e9990bb6",
+              "name": "quantidade",
+              "value": "={{ $('Edit Fields').first().json.quantidade }}",
+              "type": "string"
+            },
+            {
+              "id": "08144937-d7f1-41ec-a158-0cc45bf26ac9",
+              "name": "estoque_atual",
+              "value": "={{ $('Update row in sheet').first().json.quantidade }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1536,
+        -1808
+      ],
+      "id": "49f10639-fbac-4fd4-8909-0a4938837ea7",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1760,
+        -1808
+      ],
+      "id": "db0b131d-178a-4900-815c-2f8249c51d63",
+      "name": "Respond to Webhook1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "63130e5c-8f03-4d7c-a6aa-b8e47772c738",
+              "name": "status",
+              "value": "sucesso",
+              "type": "string"
+            },
+            {
+              "id": "933dd39f-2d3e-4fd7-95d1-94bbb42b987d",
+              "name": "mensagem",
+              "value": "Entrada realizada com sucesso",
+              "type": "string"
+            },
+            {
+              "id": "af0ee6c7-7de7-42e4-877c-105fe660ef0b",
+              "name": "lona",
+              "value": "={{ $('Edit Fields').first().json.lona }}",
+              "type": "string"
+            },
+            {
+              "id": "53c73c6e-80e8-4810-8ec6-5acbfb1b0dee",
+              "name": "quantidade",
+              "value": "={{ $('Edit Fields').first().json.quantidade }}",
+              "type": "number"
+            },
+            {
+              "id": "42702cdf-c0ba-4348-afc8-63f3bc626aca",
+              "name": "estoque_entrada",
+              "value": "={{ $('Update row in sheet1').first().json.quantidade }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1104,
+        -448
+      ],
+      "id": "60f34099-31d0-4f76-94df-4fb24519c7cb",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1328,
+        -448
+      ],
+      "id": "10b91845-188a-4f13-bb02-70c4c2a1c76e",
+      "name": "Respond to Webhook2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "5e888bbc-4f56-4a15-aaa1-b9528d292e79",
+              "leftValue": "={{ $json.quantidade }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            },
+            {
+              "id": "fbcc166b-c0a7-4100-95e9-522790693445",
+              "leftValue": "={{ $json.funcionario }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "259caf94-e88e-4dd2-b342-6f48cda3f2e5",
+              "leftValue": "={{ $json.lona }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -560,
+        32
+      ],
+      "id": "26b478a4-51d8-4430-a21c-05b2b3a1930b",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5b2d2c07-0c82-46cb-ba0e-76dc9f12611a",
+              "name": "status",
+              "value": "erro",
+              "type": "string"
+            },
+            {
+              "id": "28396bf6-3d73-4d80-b3f0-95700b287649",
+              "name": "mensagem",
+              "value": "Operação inválida. Informe SAIDA ou ENTRADA.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        256,
+        432
+      ],
+      "id": "6a696ef0-fc53-4fe1-b631-54daa654499b",
+      "name": "Edit Fields4"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        480,
+        432
+      ],
+      "id": "c52eff3b-7d11-4c45-a9de-5ce537137819",
+      "name": "Respond to Webhook3"
+    },
+    {
+      "parameters": {
+        "content": "REGISTRAR SAIDA",
+        "height": 288,
+        "width": 1072
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        944,
+        -1888
+      ],
+      "typeVersion": 1,
+      "id": "4d951691-e2a8-4444-bbcc-a996ae1e0eb8",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "REGISTRAR ENTRADA",
+        "height": 272,
+        "width": 1008
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        560,
+        -528
+      ],
+      "typeVersion": 1,
+      "id": "2c7ade42-35bc-4174-a73f-261eca0a8f84",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "ERRO PARA CAMPOS OBRIGATORIOS\n",
+        "height": 272,
+        "width": 496
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        208,
+        336
+      ],
+      "typeVersion": 1,
+      "id": "103efb19-08a5-4707-96b8-faeea8f73a8b",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "VALIDAR DADOS\n",
+        "height": 192,
+        "width": 272
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -624,
+        -16
+      ],
+      "typeVersion": 1,
+      "id": "be1089d6-49ac-484b-8d4c-9a3ad5e9e8c3",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "ESTOQUE INSUFICIENTE",
+        "height": 208,
+        "width": 512
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        992,
+        -1408
+      ],
+      "typeVersion": 1,
+      "id": "787ffbcc-2527-4176-8cfe-3cc5b33fd865",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "d7299ea3-ee75-428d-bafc-bfe5b4ecb555",
+              "leftValue": "={{ $json.lona }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        384,
+        -1088
+      ],
+      "id": "82cfd073-6723-46ae-87f0-86ac7f367b4e",
+      "name": "If lona encontrada"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "84f733a2-9bf2-4e36-90ce-d1e1e0dab47a",
+              "leftValue": "={{ $json.quantidade }}",
+              "rightValue": "={{ $('Edit Fields').first().json.quantidade }}",
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        544,
+        -1456
+      ],
+      "id": "e1971468-a6f4-4fba-85ac-9572d54c6ef0",
+      "name": "If estoque insuficiente"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "28cb0e9b-405f-4e66-b975-68c6d62f6009",
+              "name": "status",
+              "value": "erro",
+              "type": "string"
+            },
+            {
+              "id": "233a40b3-982c-41c6-a636-90539648de67",
+              "name": "mensagem",
+              "value": "Lona não cadastrada no estoque.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        704,
+        -976
+      ],
+      "id": "c1cbbe3b-0800-40fd-ad1f-d594f7ea2a56",
+      "name": "Edit Fields5"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        928,
+        -976
+      ],
+      "id": "c2a5e882-9419-4eff-bd65-794f93ad1c29",
+      "name": "Respond to Webhook4"
+    },
+    {
+      "parameters": {
+        "content": "LONA NÃO ENCONTRADA",
+        "height": 224,
+        "width": 512
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        640,
+        -1040
+      ],
+      "typeVersion": 1,
+      "id": "f64c606a-e1c1-4db0-ae55-dcbfc09e8805",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "d7299ea3-ee75-428d-bafc-bfe5b4ecb555",
+              "leftValue": "={{ $json.lona }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        320,
+        -304
+      ],
+      "id": "fc7283ab-93d6-4e6d-a39a-77e56bb9059c",
+      "name": "If lona encontrada1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "28cb0e9b-405f-4e66-b975-68c6d62f6009",
+              "name": "status",
+              "value": "erro",
+              "type": "string"
+            },
+            {
+              "id": "233a40b3-982c-41c6-a636-90539648de67",
+              "name": "mensagem",
+              "value": "Lona não cadastrada no estoque.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        736,
+        -80
+      ],
+      "id": "86181bbd-fbd2-4547-8723-576deaa03479",
+      "name": "Edit Fields6"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        960,
+        -80
+      ],
+      "id": "a3fabe04-2544-4f27-bf26-3ddcce6bcee6",
+      "name": "Respond to Webhook5"
+    },
+    {
+      "parameters": {
+        "content": "LONA NÃO ENCONTRADA",
+        "height": 224,
+        "width": 512
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        672,
+        -144
+      ],
+      "typeVersion": 1,
+      "id": "d2b85a63-79b0-440b-829a-d40a78c9fa95",
+      "name": "Sticky Note6"
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "If lona encontrada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get row(s) in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet1": {
+      "main": [
+        [
+          {
+            "node": "If lona encontrada1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If lona encontrada": {
+      "main": [
+        [
+          {
+            "node": "If estoque insuficiente",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If estoque insuficiente": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields5": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If lona encontrada1": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields6": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {
+    "Webhook": [
+      {
+        "headers": {
+          "host": "localhost:5678",
+          "connection": "keep-alive",
+          "content-length": "72",
+          "sec-ch-ua-platform": "\"Windows\"",
+          "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+          "sec-ch-ua": "\"Chromium\";v=\"152\", \"Not?A_Brand\";v=\"24\", \"Google Chrome\";v=\"152\"",
+          "content-type": "application/json",
+          "sec-ch-ua-mobile": "?0",
+          "accept": "*/*",
+          "origin": "null",
+          "sec-fetch-site": "cross-site",
+          "sec-fetch-mode": "cors",
+          "sec-fetch-dest": "empty",
+          "accept-encoding": "gzip, deflate, br, zstd",
+          "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7"
+        },
+        "params": {},
+        "query": {},
+        "body": {
+          "funcionario": "João",
+          "lona": "5x5",
+          "operacao": "ENTRADA",
+          "quantidade": 1
+        },
+        "webhookUrl": "http://localhost:5678/webhook/bc4632ec-7656-487e-a513-9e3619c36ee5",
+        "executionMode": "production"
+      }
+    ]
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "7157c655e15ad9fd1282b2b5afb0ba588ea70d65f68f74254862fee2222e5057"
+  }
+}
